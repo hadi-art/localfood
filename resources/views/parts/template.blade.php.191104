@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>KiplePark Local System</title>
+		<!-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> -->
+		<!-- Scripts -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Vendor styles -->
+
+		<!-- App styles -->
+		<link rel="stylesheet" href="{{asset('css/app.min.css')}}">
+
+		<link href="{{ asset('vendors/bower_components/jquery.scrollbar/jquery.scrollbar.css')}}" rel="stylesheet">
+		<link href="{{ asset('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/bower_components/animate.css/animate.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/bower_components/nouislider/distribute/nouislider.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/bower_components/dropzone/dist/dropzone.css') }}" rel="stylesheet">
+
+		<link href="{{ asset('vendors/bower_components/trumbowyg/dist/ui/trumbowyg.min.css') }}" rel="stylesheet" >
+		<link href="{{ asset('vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+
+		<link rel="stylesheet" href="{{asset('vendors/sweetalert2/sweetalert2.min.css')}}">
+
+
+		<!-- Styles -->
+		<link href="{{ asset('css/app.css') }}?20190528" rel="stylesheet">
+		<script type="text/javascript" src="{{asset('js/app2.min.js')}}"></script>
+		<style>
+			ul {
+				list-style-type: none;
+			}
+			.active{
+				background-color:#e8e9ea;
+			}
+		</style>
+		@yield('style')
+	</head>
+	<body data-ma-theme="blue">
+		<main class="main">
+			<!-- Header -->
+			<header class="header">
+				<div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+					<div class="navigation-trigger__inner">
+						<i class="navigation-trigger__line"></i>
+						<i class="navigation-trigger__line"></i>
+						<i class="navigation-trigger__line"></i>
+					</div>
+				</div>
+
+				<div class="header__logo hidden-sm-down">
+				<img src="{{asset('img/kiple-logo-white.png')}}" alt="kiplepark-logo" width="150" >
+				<!-- <h1><a href="index.html">KIPLEPARK LOCAL-PSM</a></h1> -->
+				</div>
+
+
+				<ul class="top-nav">
+
+					<li class="dropdown">
+						<a href="" data-toggle="dropdown"><div><i class="zmdi zmdi-account-circle zmdi-hc-3x"></i></div></a>
+
+						<div class="dropdown-menu dropdown-menu-right">
+ 								<div class="user">
+									<div class="user__info">
+										<img class="user__img" src="{{asset('img/profile-pics/4.jpg')}}" alt="">
+										<div>
+											<div class="user__name"> {{ Auth::user()->name }}</div>
+											<div class="user__email"> {{ Auth::user()->email }}</div>
+										</div>
+									</div>
+
+									<div class="dropdown-menu">
+
+									</div>
+								</div>
+  							<!-- <a class="dropdown-item" href="">Profile</a> -->
+
+
+                            <a class="dropdown-item" href="{{ route('change-password') }}">
+                                {{ __('Change Password') }}
+                            </a>
+
+							<a class="dropdown-item" href="{{ route('logout') }}"
+							   onclick="event.preventDefault();
+										document.getElementById('logout-form').submit();">
+								{{ __('Logout') }}
+							</a>
+
+
+
+
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>
+
+						</div>
+					</li>
+				</ul>
+			</header>
+
+
+			<!-- Sidebar -->
+			<aside class="sidebar" style="border-style: solid; border-width: 1px;border-color:#e0e0e0;">
+				<div class="scrollbar-inner">
+					<ul class="navigation">
+						@foreach ($menus as $item)
+						<li class="nav-item @if(Request::is($item->route_name))'active'@else'' @endif">
+							<a @if ($item->route_name == "javascript:void(0);") href="{{$item->route_name}}" @else href="{{ route($item->route_name) }}" @endif >
+								<i class="zmdi {{$item->icons_name}}"></i>
+								{{$item->display_name}}
+							</a>
+						</li>
+						@endforeach
+
+					
+						@auth()
+
+						<?php
+
+						$a_date=date('Y-m-d');
+						$lastday_month=date("Y-m-t", strtotime($a_date));
+						$firstday_month=date("Y-m-01");
+						?>
+						<li class="nav-item {{ Request::is('home') ? 'active' : '' }}"><a href="{{ url('/home') }}"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
+						<li class="nav=item {{ Request::is('land_dashboard')?'active':''}}"><a href="{{ url('/lane_dashboard') }}"> <i class="zmdi zmdi-view-dashboard"></i>Lane Dashboard </a></li>
+							@can('view_car_in_site')
+							<li class="nav-item {{ Request::is('car_in_park') ? 'active' : '' }}"><a href="{{ url('/car_in_park') }}"><i class="zmdi zmdi-card"></i>Car In Park</a></li>
+							@endcan
+							@can('view_white_list')
+							<li class="nav-item {{ Request::is('white_list') ? 'active' : '' }}"><a href="{{ url('/white_list') }}"><i class="zmdi zmdi-account-box"></i> White List</a></li>
+							@endcan
+
+							@can('view_season')
+							<li class="nav-item {{ Request::is('season') ? 'active' : '' }}"><a href="{{ url('/season') }}"><i class="zmdi zmdi-account-box"></i> Season Account</a></li>
+							@endcan
+							@can('view_entry_history')
+							<li class="nav-item {{ Request::is('parking_history') ? 'active' : '' }}"><a href="{{ url('/parking_history') }}"><i class="zmdi zmdi-file-text"></i> Parking History</a></li>
+							@endcan
+
+							{{--<li class="navigation__sub">--}}
+							{{--<a href=""><i class="zmdi zmdi-center-focus-strong"></i> LPR Season Parking</a>--}}
+
+							{{--<ul style="{{ Request::is('card_list')|Request::is('entry_history') ? 'display: block;' : '' }}">--}}
+ 	{{----}}
+								{{--@can('view_car_in_site')--}}
+								{{--<li class="nav-item {{ Request::is('card_list') ? 'active' : '' }}"><a href="{{ url('/card_list') }}"><i class="zmdi zmdi-account-box"></i> Season Account</a></li>--}}
+								{{--@endcan--}}
+
+								{{--@can('view_entry_history')--}}
+								{{--<li class="nav-item {{ Request::is('parking_history') ? 'active' : '' }}"><a href="{{ url('/parking_history') }}"><i class="zmdi zmdi-file-text"></i> Parking History</a></li>--}}
+								{{--@endcan --}}
+								 {{----}}
+							{{--</ul>--}}
+							{{--</li>--}}
+
+
+						@can('view_lane_config')
+						<li class="nav-item {{ Request::is('lane_config') ? 'active' : '' }}"><a href="{{ url('/lane_config') }}"><i class="zmdi zmdi-camera"></i>Lane/Camera Info</a></li>
+						@endcan
+
+						<li class="navigation__sub">
+							@can('view_entry_log_db')
+							<a href=""><i class="zmdi zmdi-chart"></i> Analytic</a>
+
+							<ul style="{{ Request::is('entry_log_db')|Request::is('entry_log_reviewed') ? 'display: block;' : '' }}">
+
+								@can('view_entry_log_db')
+									<li class="nav-item {{ Request::is('entry_log') ? 'active' : '' }}"><a href="{{ url('/entry_log') }}"><i class="zmdi zmdi-file-text"></i> Entry log</a></li>
+								@endcan
+
+
+								<!-- @can('view_entry_log_reviewed')
+									<li class="nav-item {{ Request::is('entry_log_reviewed') ? 'active' : '' }}"><a href="{{-- url('/entry_log_reviewed') }}?start_date={{$firstday_month}}T00:00&end_date={{$lastday_month}}T23:59--}}"><i class="zmdi zmdi-assignment-check"></i> Entry log Reviewed</a></li>
+								@endcan  -->
+
+							</ul>
+							@endcan
+						</li>
+
+						<li class="navigation__sub">
+							<a href=""><i class="zmdi zmdi-chart"></i>Reports</a>
+							<ul style="{{ Request::is('report*') ? 'display: block;' : '' }}">
+								<li class="nav-item {{ Request::is('report_daily_car_in_park') ? 'active' : '' }}"><a href="{{ url('/report_daily_car_in_park') }}"><i class="zmdi zmdi-grid"></i> Daily Car In Park</a></li>
+								<li class="nav-item {{ Request::is('report_hourly_traffic') ? 'active' : '' }}"><a href="{{ url('/report_hourly_traffic') }}"><i class="zmdi zmdi-grid"></i> Hourly Traffic</a></li>
+								<li class="nav-item {{ Request::is('report_revenue') ? 'active' : '' }}"><a href="{{ url('/report_revenue') }}"><i class="zmdi zmdi-grid"></i> Revenue</a></li>
+								<li class="nav-item {{ Request::is('report_manual_leave') ? 'active' : '' }}"><a href="{{ url('/report_manual_leave') }}"><i class="zmdi zmdi-chart-donut"></i> Manual Leave</a></li>
+
+								@can('view_billing_report')
+									<li class="nav-item {{ Request::is('report_transaction') ? 'active' : '' }}"><a href="{{ url('/report_transaction') }}"><i class="zmdi zmdi-grid"></i> Transactions</a></li>
+								@endcan
+							</ul>
+						</li>
+
+						<li class="navigation__sub">
+							<a href=""><i class="zmdi zmdi-settings"></i> System</a>
+
+							<ul style="{{ Request::is('parking_rates*')|Request::is('plate_no_map')|Request::is('auto_deduct_whitelist')|Request::is('users*')|Request::is('roles*')|Request::is('audit*') ? 'display: block;' : '' }}">
+								@can('view_plate_no_map')
+									<li class="nav-item {{ Request::is('plate_no_map') ? 'active' : '' }}">
+										<a class="nav-link" href="{{ route('plate_no_map') }}">
+										<i class="zmdi zmdi-car-taxi"></i> Plate No Map
+										</a>
+									</li>
+								@endcan
+
+								@can('view_auto_deduct_whitelist')
+									<li class="nav-item {{ Request::is('auto_deduct_whitelist') ? 'active' : '' }}">
+										<a class="nav-link" href="{{ route('auto_deduct_whitelist') }}">
+											<i class="zmdi zmdi-car-taxi"></i> Auto deduct whitelist
+										</a>
+									</li>
+								@endcan
+
+								@can('view_users')
+									<li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
+										<a class="nav-link" href="{{ route('users.index') }}">
+										<i class="zmdi zmdi-accounts"></i> Users
+										</a>
+									</li>
+								@endcan
+
+								@can('view_parking_rates')
+									<li class="nav-item {{ Request::is('parking_rates') ? 'active' : '' }}">
+										<a class="nav-link" href="{{ route('parking_rates') }}">
+										<i class="zmdi zmdi-accounts"></i> Parking Rates
+										</a>
+									</li>
+								@endcan
+
+								@can('view_roles')
+									<li class="nav-item {{ Request::is('roles*') ? 'active' : '' }}">
+										<a class="nav-link" href="{{ route('roles.index') }}">
+										<i class="zmdi zmdi-shield-check"></i> User access right
+										</a>
+									</li>
+								@endcan
+								@can('view_audit')
+								<li class="nav-item {{ Request::is('audit*') ? 'active' : '' }}"><a href="{{ url('/audit?filter=session') }}"><i class="zmdi zmdi-arrow-right"></i> Session Logs</a></li>
+								@endcan
+					{{--need to update later for dedicated per user access right..currently it same as view logs accessibility--}}
+								@can('view_logs')
+									<li><a href="{{ route('payment_logs') }}"><i class="zmdi zmdi-arrow-right"></i> Payment Logs</a></li>
+								@endcan
+								{{--@can('view_logs')--}}
+								{{--<li><a href="{{ route('logs') }}"><i class="zmdi zmdi-folder"></i> Details Logs</a></li>--}}
+								{{--@endcan--}}
+
+							</ul>
+						</li>
+
+					@endauth
+					</ul>
+				</div>
+			</aside>
+
+
+			<!-- Contents -->
+			<section class="content">
+				<div class="content__inner">
+
+					<div class="container">
+						@yield('content')
+					</div>
+					<!-- Footer -->
+					<footer class="footer hidden-xs-down">
+						<p>© v1.0.3 2019 | Copyright by KiplePark Malaysia</p>
+					</footer>
+				</div>
+			</section>
+
+			<script type="text/javascript" src="{{asset('vendors/bower_components/jquery/dist/jquery.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('vendors/bower_components/popper.js/dist/umd/popper.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('vendors/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('js/app.min.js')}}"></script>
+
+
+			<script type="text/javascript" src="{{asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+
+
+			<script type="text/javascript" src="{{asset('vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js')}}"></script>
+
+			<script src="{{asset('vendors/bower_components/flot/jquery.flot.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/flot/jquery.flot.pie.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/flot/jquery.flot.resize.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/flot.curvedlines/curvedLines.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/nouislider/distribute/nouislider.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/dropzone/dist/min/dropzone.min.js')}}"></script>
+
+			<script src="{{asset('vendors/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/jszip/dist/jszip.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/autosize/dist/autosize.min.js')}}"></script>
+
+
+			<script src="{{asset('vendors/bower_components/jqvmap/dist/jquery.vmap.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/salvattore/dist/salvattore.min.js')}}"></script>
+			<script src="{{asset('vendors/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
+			<script src="{{asset('vendors/bower_components/moment/min/moment.min.js')}}"></script>
+
+
+			<script src="{{asset('vendors/bower_components/trumbowyg/dist/trumbowyg.min.js')}}"></script>
+			<script src="{{asset('vendors/flatpickr/flatpickr.min.js')}}"></script>
+			<script src="{{asset('vendors/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+			<script src="{{asset('vendors/sweetalert2/sweetalert2.min.js')}}"></script>
+			<script type="text/javascript" src="{{asset('js/base64.js')}}"></script>
+			@yield('script')
+		</main>
+	</body>
+</html>

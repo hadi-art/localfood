@@ -1,23 +1,25 @@
-@extends('layouts.app')
+@extends('parts.template')
+
+@section('title')
+	Home
+@endsection
+
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+	<div class="page-loader">
+		<div class="page-loader__spinner">
+			<svg viewBox="25 25 50 50">
+				<circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+			</svg>
+		</div>
+	</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+	<font color="#b2b2b2" size="5"><b>DASHBOARD</b></font><br>
+	<br>
+	<!--
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Index</li>
+        </ol>
+    -->
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
