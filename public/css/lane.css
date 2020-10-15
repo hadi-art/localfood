@@ -1,0 +1,292 @@
+.must_input_i {
+    color: red;
+    margin-right: 1rem;
+}
+
+.lane-top-box {
+    display: flex;
+}
+
+.lane-top-box .card {
+    height: 350px;
+    padding: 10px;
+}
+
+.lane-top-box .card .tab-nav {
+    margin: 0 ;
+    width: 100%;
+}
+
+.lane-top-box .card .tab-nav .active {
+    background-color: #ffffff;
+}
+
+.lane-top-box .card:first-child {
+    width: 675px;
+}
+
+.lane-top-box .card:last-child {
+    width: 420px;
+    margin-left: 10px;
+}
+
+.font-12 {
+    font-size: 12px;
+}
+
+.swiper-container {
+    height: 28px;
+}
+
+.swiper-slide a {
+    padding-bottom: 15px;
+    display: block;
+    text-align: center;
+    position: relative;
+    color: #9c9c9c;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    width: 100%;
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.swiper-slide {
+    border-bottom: 2px solid #9c9c9c;;
+    padding:0 20px 0 20px;
+}
+
+.swiper-slide.active {
+    border-bottom: 2px solid #04a9f4;;
+}
+
+.swiper-slide.active a {
+    color: #04a9f4;
+}
+
+.swiper-button-prev {
+    left: 0 !important;
+    font-weight: bold;
+}
+
+.swiper-button-next {
+    right: 0 !important;
+    font-weight: bold;
+}
+
+.swiper-container{
+    --swiper-navigation-size: 20px; !important;
+}
+
+
+.lane-info-box {
+    display: flex;
+}
+
+.lane-info-box > div {
+    width: 48%;
+}
+
+.div-exit-new {
+    width: 330px;
+}
+
+.div-exit-new .top-btn {
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+}
+
+.div-exit-new .top-btn > div {
+    width: 48%;
+}
+
+.div-exit-new .top-btn .btn-box #button-leave {
+    float: right;
+}
+
+.div-exit-new .img {
+    margin-top: 10px;
+    width: 100%;
+    height: 120px;
+}
+
+.div-exit-new .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.log-info .log-info-item {
+    display: flex;
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.log-info .log-info-item:first-child {
+    margin-top: 5px;
+}
+
+.log-info .log-info-item .log-info-title {
+    width: 100px;
+    font-weight: bold;
+}
+
+.log-info .log-info-item .log-info-value {
+    margin-right: 2px;
+}
+
+#div-matched-entry-new {
+    margin-left: 20px;
+}
+
+#equipment {
+    font-size: 10px;
+    table-layout: fixed;
+    width: 100%;
+}
+#equipment .dataTables_info{
+    margin-bottom: 0 !important;
+}
+
+#equipment thead > tr > th, #equipment tbody > tr > td {
+    padding: 0;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+
+#equipment tbody > tr > td {
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 2px;
+}
+
+#equipment tbody > tr > td i {
+    margin-top: 10px;
+}
+
+
+.card-title {
+    margin-bottom: 0;
+}
+
+.transaction-title {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+
+}
+
+.transaction-title .card-subtitle {
+    margin: 0;
+}
+
+.transaction-card {
+    padding: 15px;
+}
+
+.transaction-card table {
+    font-size: 12px;
+}
+
+#input-plate-no {
+    height: 30px;
+    line-height: 30px;
+    padding-top: 0;
+    font-size: 12px;
+    width: 80px;
+    display: inline-block;
+}
+
+#button-change {
+    color: #04a9f4;
+    font-size: 16px;
+}
+
+.transaction-tap {
+    margin-top: 0;
+}
+
+.transaction-tap .active {
+    background: #ffffff;
+    color: #04a9f4;
+}
+
+.cw-switch {
+    display: inline-block;
+    width: 70px;
+    height: 24px;
+    line-height: 22px;
+    border-radius: 24px;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: all .2s ease-in-out
+}
+
+.cw-switch-inner {
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    left: 25px
+}
+
+.cw-switch:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    cursor: pointer;
+    transition: left .2s ease-in-out, width .2s ease-in-out
+}
+
+.cw-switch:active:after {
+    width: 26px
+}
+
+.cw-switch-checked {
+    border-color: #39f;
+    background-color: #39f
+}
+
+.cw-switch-checked .cw-switch-inner {
+    left: 8px
+}
+
+.cw-switch-checked:after {
+    left: 40px
+}
+
+.cw-switch-checked:active:after {
+    left: 19px
+}
+
+.cw-switch-disabled {
+    cursor: not-allowed;
+    background: #f3f3f3;
+    border-color: #f3f3f3
+}
+
+.cw-switch-disabled:after {
+    background: #ccc;
+    cursor: not-allowed
+}
+
+.cw-switch-disabled .cw-switch-inner {
+    color: #ccc
+}
