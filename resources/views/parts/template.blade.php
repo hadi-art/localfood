@@ -72,7 +72,7 @@
 
 									</div>
 								</div>
-  							<!-- <a class="dropdown-item" href="">Profile</a> -->
+  							<a class="dropdown-item" href="">Profile</a>
 
 
 								<a class="dropdown-item" href="{{ route('change-password') }}">
